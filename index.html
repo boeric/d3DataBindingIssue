@@ -41,14 +41,14 @@ data[0].rows.push({ table: "Table1", row: "Row3", data: "DataT1R3" });
 // observe that the Lower table (which is using cloned data) does NOT update
 update(data);
 
-/*
+
 // remove first array of the data structure
 data[0].rows.shift();
 
 // run update again
 // observe that the Lower table (which again is using cloned data) does NOT update
 update(data);
-*/
+
 
 // function to run the tableUpdate function targeting two different divs, one with the 
 // original data, and the other with cloned data
@@ -85,7 +85,7 @@ function tableUpdate(data, tableDiv, title) {
   tableEnter.append("tbody");
 
   // select all tr elements in the divs update selection
-  var tr = divs.selectAll("table").selectAll("tbody").selectAll("tr")
+  var tr = divs.select("table").select("tbody").selectAll("tr")
       .data(function(d, i, a) { return d.rows; }, function(d, i, a) { return d.row; }); // disable by-index eval
 
   // remove any row(s) with missing data array(s)
