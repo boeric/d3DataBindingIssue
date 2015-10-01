@@ -1,6 +1,6 @@
 ## D3 Data Binding Issue
 
-**Update:** Problem partially fixed with the help of Lars Kotthoff on [StackOverflow](https://stackoverflow.com/questions/32891241/data-binding-in-d3-fails-when-using-cloned-data). The main problem was using the `SelectAll()` function instead of `Select()`. The issue of D3 behavior difference between using original and "cloned" is still open. 
+**Update:** Problem partially fixed with the help of Lars Kotthoff on [StackOverflow](https://stackoverflow.com/questions/32891241/data-binding-in-d3-fails-when-using-cloned-data). The main problem was using the `SelectAll()` function instead of `Select()`. The issue of D3 behavior difference between using original and "cloned" data is still unresolved. 
 
 This Gist/[Blocks](http://bl.ocks.org/boeric/8489eeaf21a5f75f3a07) demonstrates a behavior difference in D3, when binding data using the original data object, vs. using a cloned version of the data object. In the example, the **updateTable** function is called from **update** function with the **original** data object drawing a table in the first div. It then is called with a **cloned** version of the data object, drawing this table in a second div.
 
