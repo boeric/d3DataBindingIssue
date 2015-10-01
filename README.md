@@ -18,7 +18,7 @@ var data = [
 update(data);
 ```
 
-**update then runs **tableUpdate** twice, first with the original data in the top div, then with the cloned data in the lower div.
+**update** then runs **tableUpdate** twice, first with the original data in the top div, then with the cloned data in the lower div.
 
 ```
 function update(data) {
