@@ -13,7 +13,6 @@
 <script>
 'use strict';
 
-// title
 d3.select("body").append("h3").text("D3 Data Binding Issue");
 
 // create two divs to hold one table each
@@ -21,46 +20,53 @@ var tableDiv1 = d3.select("body").append("div");
 d3.select("body").append("hr");
 var tableDiv2 = d3.select("body").append("div");
 
-// an array of a single item (which represents a table), containing an array of rows, each destined for a table row
+// define data
+// here, an array of a single item (which represents a table), containing an array of arrays, 
+// each destined for a table row
 var data = [
   { table: "Table1", rows: [
       { table: "Table1", row: "Row1", data: "DataT1R1" },
       { table: "Table1", row: "Row2", data: "DataT1R2" }
     ]
   }
-]
+];
+
 // run update on the initial data
 update(data);
 
-// add 3rd row to the table --> observe that the Lower table (which is using cloned data) does NOT update
+// add 3rd array to the data structure (which should add a third row in each table)
 data[0].rows.push({ table: "Table1", row: "Row3", data: "DataT1R3" });
 
-// run update after the addition of the new table row
+// run update again
+// observe that the Lower table (which is using cloned data) does NOT update
 update(data);
 
 /*
-// remove first row of the table --> observe that the Lower table (which is using cloned data) does NOT update
+// remove first array of the data structure
 data[0].rows.shift();
 
-// run update after the deletion of the table row
+// run update again
+// observe that the Lower table (which again is using cloned data) does NOT update
 update(data);
 */
 
-
+// function to run the tableUpdate function targeting two different divs, one with the 
+// original data, and the other with cloned data
 function update(data) {
+  // the contents of the two data structures are equal
   console.log("\nAre object values equal? ", JSON.stringify(data) == JSON.stringify(clone(data)));
 
-  tableUpdate(data, tableDiv1, "Using Original Data"); 
-  tableUpdate(clone(data), tableDiv2, "Using Cloned Data");
+  tableUpdate(data, tableDiv1, "Using Original Data"); // update first table
+  tableUpdate(clone(data), tableDiv2, "Using Cloned Data"); //
 }
 
-
+// generic function to manage array of tables (in this simple example only one table is managed)
 function tableUpdate(data, tableDiv, title) {
-  console.log("data", JSON.stringify(data))
+  console.log("data", JSON.stringify(data));
 
   // get all divs in this table div 
   var divs = tableDiv.selectAll("div")
-      .data(data, function(d) { return d.table }) // disable default by-index eval
+      .data(data, function(d) { return d.table }); // disable default by-index eval
 
   // remove div(s)
   divs.exit().remove();
@@ -73,20 +79,19 @@ function tableUpdate(data, tableDiv, title) {
 
   // append table(s) in new div(s)
   var tableEnter = divsEnter.append("table")
-      .attr("id", function(d) { return d.table })
-      //.style("border", "1px solid gray")
+      .attr("id", function(d) { return d.table });
 
-  // append table body in new table(s) in new divs(s)
+  // append table body in new table(s)
   tableEnter.append("tbody");
 
   // select all tr elements in the divs update selection
   var tr = divs.selectAll("table").selectAll("tbody").selectAll("tr")
       .data(function(d, i, a) { return d.rows; }, function(d, i, a) { return d.row; }); // disable by-index eval
 
-  // remove any row(s) with missing data
+  // remove any row(s) with missing data array(s)
   tr.exit().remove();
 
-  // add row(s) for new data item(s)
+  // add row(s) for new data array(s)
   tr.enter().append("tr");
 
   // bind data to table cells
@@ -97,15 +102,14 @@ function tableUpdate(data, tableDiv, title) {
   td.enter().append("td");
 
   // update contents of table cells
-  td.text(function(d) { return d; })
+  td.text(function(d) { return d; });
 
 }
 
-
 // source: https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm
 function clone(objectToBeCloned) {
-  // use this copy method...
-  //return JSON.parse(JSON.stringify(objectToBeCloned));
+  // or just use this copy method... makes no difference...
+  // return JSON.parse(JSON.stringify(objectToBeCloned));
 
   // or this one (doesn't make a difference)
   // Basis.
