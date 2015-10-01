@@ -18,6 +18,16 @@ var data = [
 update(data);
 ```
 
+**update then runs **tableUpdate** twice, first with the original data in the top div, then with the cloned data in the lower div.
+
+```
+function update(data) {
+  tableUpdate(data, tableDiv1, "Using Original Data"); // update first table
+  tableUpdate(clone(data), tableDiv2, "Using Cloned Data"); // update second table
+}
+```
+
+
 So far so good - both tables have the same contents (which can be verified by commenting out the next code segment and stopping there). 
 
 We then add an array to the data structure (representing one new table row), and run the update function again:

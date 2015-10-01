@@ -57,7 +57,7 @@ function update(data) {
   console.log("\nAre object values equal? ", JSON.stringify(data) == JSON.stringify(clone(data)));
 
   tableUpdate(data, tableDiv1, "Using Original Data"); // update first table
-  tableUpdate(clone(data), tableDiv2, "Using Cloned Data"); //
+  tableUpdate(clone(data), tableDiv2, "Using Cloned Data"); // update second table
 }
 
 // generic function to manage array of tables (in this simple example only one table is managed)
